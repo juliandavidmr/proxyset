@@ -1,0 +1,25 @@
+{
+  "name": "state_proxy_git",
+  "version": "1.0.0",
+  "description": "Toolkit for setting up the github proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliandavidmr/state_proxy_git.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juliandavidmr/state_proxy_git/issues"
+  },
+  "homepage": "https://github.com/juliandavidmr/state_proxy_git#readme",
+  "dependencies": {
+    "menu-args": "0.0.3",
+    "prompt": "^1.0.0",
+    "shelljs": "^0.8.1"
+  }
+}
