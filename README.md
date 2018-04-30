@@ -15,12 +15,11 @@ Quickly set up git proxy:
 ```bash
 node index.js e -g
 
-# Enable proxy
 # prompt: host:  the.host.com.co
 # prompt: port:  8080
 # prompt: username:  user.name
 # prompt: password:  the.pass
-# 
+#
 # Configure git proxy
 # Successfully configured!!
 ```
@@ -36,5 +35,21 @@ Quickly set up npm proxy:
 ```bash
 # under construction
 ```
+
+### Commands
+
+| Options |         Detail      |
+|---------|---------------------|
+| enable  | Enable proxy        |
+| disable | Disable proxy       |
+
+### Options
+
+| Options |         Detail      | Type | Default |
+|---------|---------------------|------|---------|
+| auth    | Use authentication  | Bool | true    |
+| npm     | Set npm proxy       | None |         |
+| yarn    | Set yarn proxy      | None |         |
+| git     | Set git proxy       | None |         |
 
 License MIT

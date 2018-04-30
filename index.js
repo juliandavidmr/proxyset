@@ -1,17 +1,21 @@
 const menu = require('menu-args')
 const read = require('./read')
-const git = require('./git')
-
+const cmd = require('./commands')
+const util = require('./util')
+const log = console.log
 // Menu
 var args = menu(`
 Commands
-    enable	"Enable proxy"
-    disable	"Disable proxy"
+	enable	"Enable proxy"
+	disable	"Disable proxy"
 
 Options
-    npm			"Set up npm proxy"
-		yarn		"Setup yarn proxy"
-		git			"Setup git proxy"
+	npm			"Set npm proxy"
+	yarn		"Set yarn proxy"
+	git			"Set git proxy"
+
+	auth		(true)	"Usage auth"
+	view		"View data proxy, i.e: -"
 `)
 
 const flags = args.parse(process.argv)
@@ -23,21 +27,37 @@ args.hasCommand = function (val) {
 		let f = val.filter(e => this.sub.indexOf(e) !== -1)
 		return f.length > 0
 	}
-}
-
-git.check();
+};
 
 (async () => {
-	if (args.hasCommand(['e', 'enable'])) {
-		console.log("Enable proxy");
-		let credentials = await read.getCredentials()
+
+	try {
+		let with_auth = (JSON.parse(flags.a) || JSON.parse(flags.auth))
+
 		if (flags.g || flags.git) {
-			console.log('Configure git proxy');
-			git.enableProxy(credentials)
+			cmd.git.check()
+
+			if (flags.v || flags.view) {
+				log(cmd.exec(cmd.git.view))
+			} else if (args.hasCommand(['e', 'enable'])) {
+				log('Configure git proxy')
+				const str = await read.getCredentials(with_auth)
+				cmd.exec(cmd.git.enable(str))
+				log('Git proxy success!')
+			} else if (args.hasCommand(['d', 'disable'])) {
+				let result = cmd.exec(cmd.git.disable, true)
+				if (result.err) {
+					console.error('->', result.output)
+				} else {
+					log('Git proxy removed!')
+				}
+			}
 		}
-	} else if (args.hasCommand(['d', 'disable'])) {
-		console.log("Disable proxy");
-		git.disableProxy()
+
+		if (flags.n || flags.npm) {}
+		if (flags.y || flags.yarn) {}
+	} catch (error) {
+		console.error('Error generic:', error);
 	}
 })()
 // console.log(args.sub, flags)

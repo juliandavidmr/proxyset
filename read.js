@@ -1,39 +1,62 @@
-const { isNumber } = require( 'util');
 const prompt = require('prompt')
 
+const schemaBasic = [{
+	name: 'host',
+	required: true,
+	conform: function (value) {
+		return value.length > 1; //TODO: Validate host
+	}
+}, {
+	name: 'port',
+	type: 'number',
+	required: true,
+	conform: function (value) {
+		return !isNaN(value);
+	}
+}]
+
+const schemaCredential = [{
+	name: 'username',
+	required: true,
+	conform: function (value) {
+		return value.length > 0;
+	}
+}, {
+	name: 'password',
+	hidden: true,
+	conform: function (value) {
+		return true;
+	}
+}]
+
+
 module.exports = {
-	getCredentials() {
+	/**
+	 * 
+	 * @param {Boolean} with_credential 
+	 */
+	async getCredentials(with_credential) {
 		prompt.start()
 
-		return new Promise((resolve, reject) => {
-			prompt.get([{
-				name: 'host',
-				required: true,
-				conform: function (value) {
-					return value.length > 1; //TODO: Validate host
-				}
-			}, {
-				name: 'port',
-				type: 'number',
-				required: true,
-				conform: function (value) {
-					return !isNaN(value);
-				}
-			}, {
-				name: 'username',
-				required: true,
-				conform: function (value) {
-					return value.length > 0;
-				}
-			}, {
-				name: 'password',
-				hidden: true,
-				conform: function (value) {
-					return true;
-				}
-			}], function (err, result) {
+		let schema = []
+		if (with_credential) {
+			schema = [].concat(schemaBasic).concat(schemaCredential)
+		} else {
+			schema = [].concat(schemaBasic)
+		}
+
+		let crdtls = await (new Promise((resolve, reject) => {
+			prompt.get(schema, function (err, result) {
 				return err? reject(err) : resolve(result)
 			});
-		})
+		}))
+
+		credentials.password = util.prepare_password(credentials.password)
+
+		if (with_auth) {
+			return `http:\/\/${credentials.username}:${credentials.password}@${credentials.host}:${credentials.port}`
+		} else {
+			return `http:\/\/${credentials.host}:${credentials.port}`
+		}
 	}
 }
