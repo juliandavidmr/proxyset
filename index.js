@@ -1,7 +1,6 @@
 const menu = require('menu-args')
 const read = require('./read')
 const cmd = require('./commands')
-const util = require('./util')
 const log = console.log
 // Menu
 var args = menu(`

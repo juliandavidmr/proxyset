@@ -1,4 +1,5 @@
 const prompt = require('prompt')
+const util = require('./util')
 
 const schemaBasic = [{
 	name: 'host',
@@ -45,7 +46,7 @@ module.exports = {
 			schema = [].concat(schemaBasic)
 		}
 
-		let crdtls = await (new Promise((resolve, reject) => {
+		let credentials = await (new Promise((resolve, reject) => {
 			prompt.get(schema, function (err, result) {
 				return err? reject(err) : resolve(result)
 			});
@@ -53,7 +54,7 @@ module.exports = {
 
 		credentials.password = util.prepare_password(credentials.password)
 
-		if (with_auth) {
+		if (with_credential) {
 			return `http:\/\/${credentials.username}:${credentials.password}@${credentials.host}:${credentials.port}`
 		} else {
 			return `http:\/\/${credentials.host}:${credentials.port}`
