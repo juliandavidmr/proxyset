@@ -29,7 +29,6 @@ args.hasCommand = function (val) {
 };
 
 (async () => {
-
 	try {
 		let with_auth = (JSON.parse(flags.a) || JSON.parse(flags.auth))
 

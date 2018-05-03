@@ -17,10 +17,10 @@ module.exports = {
 		},
 		get disable() {
 			return [
-				//	`git config --global --unset core.gitproxy`,
-				//	`git config --global --unset http.proxy`,
-				//	`git config --global --unset https.proxy`,
-				//	`git config --global --unset http.sslVerify`
+				`git config --global --unset core.gitproxy`,
+				`git config --global --unset http.proxy`,
+				`git config --global --unset https.proxy`,
+				`git config --global --unset http.sslVerify`
 			]
 		},
 		get view() {
