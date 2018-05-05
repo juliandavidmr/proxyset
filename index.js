@@ -12,9 +12,10 @@ Options
 	npm			"Set npm proxy"
 	yarn		"Set yarn proxy"
 	git			"Set git proxy"
-
-	auth		(true)	"Usage auth"
-	view		"View data proxy, i.e: -"
+	auth (true)	"Usage auth"
+	view		"View data proxy"
+	windows	"Set Windows proxy"
+	linux		"Set Linux proxy"
 `)
 
 const flags = args.parse(process.argv)
@@ -36,7 +37,7 @@ args.hasCommand = function (val) {
 			cmd.git.check()
 
 			if (flags.v || flags.view) {
-				log(cmd.exec(cmd.git.view))
+				log(cmd.exec(cmd.git.view()))
 			} else if (args.hasCommand(['e', 'enable'])) {
 				log('Configure git proxy')
 				const str = await read.getCredentials(with_auth)
@@ -53,7 +54,12 @@ args.hasCommand = function (val) {
 		}
 
 		if (flags.n || flags.npm) {}
+
 		if (flags.y || flags.yarn) {}
+
+		if (flags.w || flags.windows) {}
+
+		if (flags.l || flags.linux) {}
 	} catch (error) {
 		console.error('Error generic:', error);
 	}

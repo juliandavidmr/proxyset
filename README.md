@@ -15,7 +15,7 @@ In some cases, it is necessary to configure the proxy for programs installed on 
 Quickly set up git proxy:
 
 ```bash
-node index.js e -g
+proxyset e -g
 
 # prompt: host:  the.host.com.co
 # prompt: port:  8080
@@ -28,13 +28,40 @@ node index.js e -g
 #### **Remove proxy**
 
 ```bash
-node index.js d -g
+proxyset d -g
 ```
 
 #### **See proxy**
 
 ```bash
-node index.js -gv
+proxyset -gv
+```
+
+### **npm**
+
+Quickly set up npm proxy:
+
+```bash
+proxyset e -g
+
+# prompt: host:  the.host.com.co
+# prompt: port:  8080
+# prompt: username:  user.name
+# prompt: password:  the.pass
+#
+# Git proxy removed!
+```
+
+#### **Remove proxy**
+
+```bash
+proxyset d -g
+```
+
+#### **See proxy**
+
+```bash
+proxyset -gv
 ```
 
 Quickly set up yarn proxy:
@@ -65,5 +92,7 @@ Quickly set up npm proxy:
 | yarn    | Set yarn proxy      | None |         |
 | git     | Set git proxy       | None |         |
 | view    | View data proxy     | None |         |
+| windows | Set windows proxy   | None |         |
+| linux   | Set linux proxy     | None |         |
 
 License MIT

@@ -2,19 +2,16 @@ const sh = require('shelljs')
 
 module.exports = {
 	git: {
-
 		check() {
 			if (!sh.which('git')) {
 				sh.echo('Sorry, this script requires git');
 				sh.exit(1);
 			}
 		},
-		enable(str) {
-			return [
-				`git config --global http.proxy "${str}"`,
-				`git config --global https.proxy "${str}"`
-			]
-		},
+		enable: str => [
+			`git config --global http.proxy "${str}"`,
+			`git config --global https.proxy "${str}"`
+		],
 		get disable() {
 			return [
 				`git config --global --unset core.gitproxy`,
@@ -23,17 +20,18 @@ module.exports = {
 				`git config --global --unset http.sslVerify`
 			]
 		},
-		get view() {
-			return [
-				`git config --global http.proxy`,
-				`git config --global https.proxy`
-			]
-		}
-	},
-	npm(str) {
-		return [
-			``
+		view: () => [
+			`git config --global http.proxy`,
+			`git config --global https.proxy`
 		]
+	},
+	npm: {
+		check() {
+			if (!sh.which('npm')) {
+				sh.echo('Sorry, this script requires npm');
+				sh.exit(1);
+			}
+		},
 	},
 	yarn(str) {
 		return [``]
@@ -45,12 +43,13 @@ module.exports = {
 	 */
 	exec(arr, _continue) {
 		let exec, result = {
-			err: false,
-			output: ''
-		}, count = 0;
+				err: false,
+				output: ''
+			},
+			count = 0;
 		for (const it of arr) {
 			//console.log("Exec:", sh.exec(it));
-			
+
 			if ((exec = sh.exec(it)).code !== 0) {
 				if (!_continue) {
 					throw `Error ${count++}: ${exec.stderr}`
